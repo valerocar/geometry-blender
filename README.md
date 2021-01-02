@@ -1,4 +1,4 @@
-# GeoBlend
+# Geometry Blender
 
 ![Double Torus](images/tdt.png)
 
