@@ -98,9 +98,6 @@ the figure below.
 - Scikit-image - For plotting implicit surfaces. Installation:
     - Anaconda Python: *conda install scikit-image*
     - Pip: *pip install scikit-image*
-- Plotly - For plotting in jupyter notebook demos. Installation
-    - Anaconda Python: *conda install -c plotly plotly*
-    - Pip: *pip install plotly*
 
 ---
 ## Installation
