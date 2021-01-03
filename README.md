@@ -10,31 +10,33 @@ using the following operations
 - Subtraction
 - Global Deformations
 
-The resulting object is an analytic expression ``f = f(x,y,z)``
-(i.e a closed mathematical
-formula) such that the resulting geometric object will be defined by 
-the inequality 
+Solid objects in 3-dimensional are represented using 
+smooth mathematical functions  `f = f(x,y,z)`, so that a point `(x,y,z)` belongs to
+the object if and only if it satisfies the inequality
 
 ```python
 f(x,y,z) <= 1/2
 ```
 
-The surface of this object is the level set
+The border of such an object is a surface that consists of  set 
+of points `(x,y,z)` that satisfy the equality
 
 ```python
 f(x,y,z) == 1/2
 ```
 
-We can mesh this level set using  algorithms like 
+We can mesh this *level set* using  algorithms like 
 [Marching Cubes](https://en.wikipedia.org/wiki/Marching_cubes)
 or 
-[Marching Tetrahedra](https://en.wikipedia.org/wiki/Marching_tetrahedra), and then render it using a graphing system.
+[Marching Tetrahedra](https://en.wikipedia.org/wiki/Marching_tetrahedra), 
+and then render into the screen by using a graphing system 
+(like [plotly](https://plotly.com/python/)).
 
 ---
-# Example: Twisted Double Torus in 3-dimensional space
-(See Jupyter notebook [DoubleTorus.ipynb](jupyter/DoubleTorus.ipynb) )
+## Example: Double Torus in 3-dimensional space
+(See Jupyter notebook [DoubleTorus.ipynb](demos/DoubleTorus.ipynb) )
 
-We can create a "twisted double torus" as follows. First, we join two lenticular shaped objects using the code
+We can create a *double torus* as follows. First, we join two lenticular shaped objects using the code
 
 ```python
 b1 = Ball3D()
@@ -48,19 +50,24 @@ b2.translate(1/2,0,0)
 obj1 = b1 + b2
 ```
 
-The ball ``b1`` represent a ball radius `1` centered at the origin.
-Then we scale `b1`  by a factor 
-``1/2`` along the `x` and `y` plane, and by a factor of `1/3` along the `z` axis; This 
-produces an object which is thinner in the ``z``-direction.
-Next, we translate  `b1` by an amount of `1/2` in the `x`-direction. The object `b2` 
-is constructed in a similar way, but is translated by an amount of `-1/2` in the `x`-direction.
-Finally, we construct `obj1` as the blended sum (union) of `b1` and `b2`.
+- The ball ``b1`` represent a ball radius `1` centered at the origin. We scale `b1` 
+by a factor 
+``1/2`` along the `x` and `y` plane and by a factor of `1/3` along the `z` axis; This 
+produces a lenticular shaped object which is thinner in the ``z``-direction.
+Next, we translate  `b1` by an amount of `-1/2` in the `x`-direction. 
+
+- The object `b2` 
+is constructed in a similar way, but is translated by an amount of `1/2` in the `x`-direction.
+
+- Finally, we construct `obj1` as the blended sum (union) of `b1` and `b2` 
+  (see Figure below)
 
 ![Double Torus](images/tdt0.png)
 
 
-We now make two holes to the above object by subtracting two cylinders `c1`
-and `c2` to `obj1`
+We now construct a new object `obj2` by making two holes to `obj1`. We
+do this by subtracting  two cylinders `c1`
+and `c2` from `obj1`. 
 
 ```python
 c1 = Cylinder3D()
@@ -76,7 +83,7 @@ obj2 = obj1-(c1+c2)
 
 ![Double Torus](images/tdt1.png)
 
-Finally, we twist one of the sides of the double torus as follows
+We can twist one of the  of *handles* of the double torus as follows
 
 ```python 
 theta = pi/2
@@ -92,7 +99,8 @@ the figure below.
 ![Double Torus](images/tdt.png)
 ---
 ## Requirements and installation
-To avoid package conflicts it is recommended to create a *Python Virtual Environment*. 
+To avoid package conflicts it is recommended to create a 
+*Python Virtual Environment* 
 for installation. This can be done at a terminal a follows
 
 - Anaconda : `conda create --name geometry python=3`
@@ -103,7 +111,7 @@ We then need to activate this environment as follows:
 
 
 The packages *numpy*, *sympy* and *scikit-image* need to be present in the virtual 
-environment. This can be achieve by typing (at a terminal)
+environment. This can be achieved by typing (at a terminal)
 
 - Anaconda : `conda install numpy sympy scikit-image`
 
@@ -116,7 +124,8 @@ Finally,  install the geometry-blender package by typing
 # Jupyter notebook demos
 
 
-Go to the [jupyter](jupyter) folder for demos.
+The [demos](demos) folder contain Jupyter Notebooks that illustrate the usage of 
+the library.
 
 
 
