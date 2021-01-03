@@ -2,8 +2,8 @@
 
 ![Double Torus](images/tdt.png)
 
-GeoBlend is a library to smoothly blend geometric objects using the following 
-operations
+The library **geometry-blender** is designed to smoothly blend geometric objects 
+using the following operations
 
 - Union
 - Intersection
@@ -31,8 +31,8 @@ or
 [Marching Tetrahedra](https://en.wikipedia.org/wiki/Marching_tetrahedra), and then render it using a graphing system.
 
 ---
-### Example: Twisted Double Torus in 3-dimensional space
-(*See Jupyter notebook [TwistedDoubleTorus.ipynb](jupyter/TwistedDoubleTorus.ipynb) for the complete code*)
+# Example: Twisted Double Torus in 3-dimensional space
+(See Jupyter notebook [DoubleTorus.ipynb](jupyter/DoubleTorus.ipynb) )
 
 We can create a "twisted double torus" as follows. First, we join two lenticular shaped objects using the code
 
@@ -51,7 +51,7 @@ obj1 = b1 + b2
 The ball ``b1`` represent a ball radius `1` centered at the origin.
 Then we scale `b1`  by a factor 
 ``1/2`` along the `x` and `y` plane, and by a factor of `1/3` along the `z` axis; This 
-produces a lenticular shaped object which is thinner in the ``z``-direction.
+produces an object which is thinner in the ``z``-direction.
 Next, we translate  `b1` by an amount of `1/2` in the `x`-direction. The object `b2` 
 is constructed in a similar way, but is translated by an amount of `-1/2` in the `x`-direction.
 Finally, we construct `obj1` as the blended sum (union) of `b1` and `b2`.
@@ -76,7 +76,7 @@ obj2 = obj1-(c1+c2)
 
 ![Double Torus](images/tdt1.png)
 
-Finally, we twist one of the holes as follows
+Finally, we twist one of the sides of the double torus as follows
 
 ```python 
 theta = pi/2
@@ -85,23 +85,38 @@ c2r = c2.rotated(1,0,0,theta)
 obj3 = (b1+b2r)-(c1+c2r)
 ```
 
-The above code produces `b2r` and `c2r` by rotating ``b2`` and ``c2`` an angle of ``pi/2``;
-using the vector ``(1,0,0)`` as the axis of rotation. The object `obj3` is shown in
+The above code constructs `b2r` and `c2r` by rotating ``b2`` and ``c2`` an angle of ``pi/2``;
+using the vector ``(1,0,0)`` as the axis of rotation. The resulting object `obj3` is shown in
 the figure below. 
 
 ![Double Torus](images/tdt.png)
 ---
-## Requirements 
+## Requirements and installation
+To avoid package conflicts it is recommended to create a *Python Virtual Environment*. 
+for installation. This can be done at a terminal a follows
 
-- Numpy - For the main library
-- Sympy - For the main library
-- Scikit-image - For plotting implicit surfaces. Installation:
-    - Anaconda Python: *conda install scikit-image*
-    - Pip: *pip install scikit-image*
+- Anaconda : `conda create --name geometry python=3`
+
+We then need to activate this environment as follows:
+
+- Anaconda : `conda activate geometry`
+
+
+The packages *numpy*, *sympy* and *scikit-image* need to be present in the virtual 
+environment. This can be achieve by typing (at a terminal)
+
+- Anaconda : `conda install numpy sympy scikit-image`
+
+Finally,  install the geometry-blender package by typing
+
+`pip install geometry-blender`
 
 ---
-## Installation
 
-Download the folder and open the Jupyter notebooks.
+# Jupyter notebook demos
 
----
+
+Go to the [jupyter](jupyter) folder for demos.
+
+
+

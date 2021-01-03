@@ -28,57 +28,20 @@ def function_graph(f, domain=[-2, 2, -2, 2], x_res=100, y_res=100, name=None, op
                       )
 
 
-def get_basic_layout(paper_bgcolor="#000"):
-    layout3d = go.Layout(
+def plot_data(data, layout=None, width=700, height=400, bg_color="rgba(0,0,0,0)"):
+    layout = go.Layout(
         title=None,
-        paper_bgcolor=paper_bgcolor,
+        paper_bgcolor=bg_color,
         autosize=False,
-        width=1200,
-        height=800,
-        margin=dict(l=10, r=10, b=50, t=50),
-        showlegend=False,
-        scene=dict(
-            aspectmode='data',
-            xaxis=dict(showticklabels=True, titlefont=dict(size=20),
-                       zeroline=True, showbackground=False, mirror=True,
-                       tickfont=dict(size=14), nticks=4, showline=True),
-
-            yaxis=dict(showticklabels=True, titlefont=dict(size=20),
-                       zeroline=True, showbackground=False, mirror=True,
-                       tickfont=dict(size=14), nticks=4, showline=True),
-
-            zaxis=dict(showticklabels=True, titlefont=dict(size=20),
-                       zeroline=True, showbackground=False, mirror=True,
-                       tickfont=dict(size=14), nticks=4, showline=True)
-        )
-    )
-    return layout3d
-
-
-def get_raw_layout(paper_bgcolor="#000"):
-    layout3d = go.Layout(
-        title=None,
-        paper_bgcolor=paper_bgcolor,
-        autosize=False,
-        width=1200,
-        height=800,
+        width=width,
+        height=height,
         margin=dict(l=10, r=10, b=50, t=50),
         showlegend=False,
         scene=dict(
             aspectmode='data',
             xaxis=dict(visible=False),
-
             yaxis=dict(visible=False),
-
             zaxis=dict(visible=False)
         )
     )
-    return layout3d
-
-
-def plot_data(data, layout=None):
-    if layout is None:
-        layout = get_raw_layout("#000")
-    fig = go.Figure(data=data, layout=layout)
-    # plotly.offline.iplot(fig)
-    return fig
+    return go.Figure(data=data, layout=layout)
