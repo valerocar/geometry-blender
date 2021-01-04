@@ -15,7 +15,7 @@ smooth mathematical functions  `f = f(x,y,z)`, so that a point `(x,y,z)` belongs
 the object if and only if it satisfies the inequality
 
 ```python
-f(x,y,z) <= 1/2
+f(x,y,z) >= 1/2
 ```
 
 The border of such an object is a surface that consists of  set 
@@ -115,17 +115,15 @@ environment. This can be achieved by typing (at a terminal)
 
 - Anaconda : `conda install numpy sympy scikit-image`
 
-Finally,  install the geometry-blender package by typing
+Clone the repository by typing 
 
-`pip install geometry-blender`
+`git clone https://github.com/valerocar/geometry-blender.git`,
 
----
+To be able to execute the Jupyter Notebooks in  [demos](demos) 
+you will need to install the plotly graphing library as follows:
 
-# Jupyter notebook demos
+- Anaconda Python: *conda install -c plotly plotly*
 
-
-The [demos](demos) folder contain Jupyter Notebooks that illustrate the usage of 
-the library.
 
 
 

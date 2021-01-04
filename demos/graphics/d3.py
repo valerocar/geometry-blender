@@ -1,34 +1,31 @@
 import plotly.graph_objs as go
-import numpy as np
-
-default_lighting = dict(ambient=0.5, diffuse=0.3, roughness=.4, specular=.3)
-default_lightposition = dict(x=10000, y=10000, z=50)
 
 
-def faces3d(vs, ts, lighting=default_lighting, lightposition=default_lightposition, opacity=1,
-            color='rgb(210,210,210)'):
-    return go.Mesh3d(x=vs[:, 0], y=vs[:, 1], z=vs[:, 2], i=ts[:, 0], j=ts[:, 1], k=ts[:, 2], lighting=lighting,
-                     lightposition=lightposition, color=color, flatshading=False, opacity=opacity)
+def mesh3d(ps, ts, opacity=1, color='rgb(210,210,210)'):
+    """
+    Creates a plotly graphical object from the position of a collection of points ps and triangles ts
+    :param ps: positions of vertices in 3-dimensional space
+    :param ts: indices of vertices forming triangles
+    :param opacity: the opacity of the mesh
+    :param color: the color of the mesh
+    :return:
+    """
+    lighting = dict(ambient=0.5, diffuse=0.3, roughness=.4, specular=.3)
+    light_position = dict(x=10000, y=10000, z=50)
+    return go.Mesh3d(x=ps[:, 0], y=ps[:, 1], z=ps[:, 2], i=ts[:, 0], j=ts[:, 1], k=ts[:, 2], lighting=lighting,
+                     lightposition=light_position, color=color, flatshading=False, opacity=opacity)
 
 
-def function_graph(f, domain=[-2, 2, -2, 2], x_res=100, y_res=100, name=None, opacity=1.0):
-    rd = 180
-    gr = 180
-    bl = 180
-    cs = [[0.0, 'rgb(' + str(rd) + ',' + str(gr) + ',' + str(bl) + ')'],
-          [1.0, 'rgb(' + str(rd) + ',' + str(gr) + ',' + str(bl) + ')']]
+def get_figure(data, width=700, height=400, bg_color="rgba(0,0,0,0)"):
+    """
+    Gets a plotly figure for the list of plotly graphical objects
 
-    x_min, x_max, y_min, y_max = domain
-    xs, ys = np.meshgrid(np.linspace(x_min, x_max, x_res), np.linspace(y_min, y_max, y_res))
-    zs = f(xs, ys)
-    lighting_effects = dict(ambient=0.4, diffuse=0.6, roughness=.4, specular=.14)
-
-    return go.Surface(x=xs, y=ys, z=zs, colorscale=cs, showscale=False, opacity=opacity,
-                      lighting=lighting_effects, lightposition=dict(x=10000, y=10000, z=50), name=name
-                      )
-
-
-def plot_data(data, layout=None, width=700, height=400, bg_color="rgba(0,0,0,0)"):
+    :param data: A list of plotly graphical objects to be displayed
+    :param width: The width of the 3d renderer
+    :param height: the height of the 3d renderer
+    :param bg_color: background color of the 3d renderer
+    :return: A plotly Figure
+    """
     layout = go.Layout(
         title=None,
         paper_bgcolor=bg_color,

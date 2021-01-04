@@ -1,0 +1,5 @@
+plotly>=4.14.1
+numpy>=1.19.2
+scikit-image>=0.17.2
+sympy>=1.6.2
+setuptools>=51.0.0

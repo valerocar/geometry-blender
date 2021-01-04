@@ -1,26 +1,38 @@
+"""
+Geometry classes
+"""
+
 from gblend.variables import x, y, z, rxy
 from sympy.algebras.quaternion import Quaternion
 from sympy import symbols, cos, sin, sqrt, N, lambdify, exp
 
 
 def sigmoid(s, k):
+    """
+    The sigmoid function as function of `s`
+    :param s:
+    :param k: smoothing parameter
+    :return:
+    """
     return 1 / (1 + exp(-(s / k)))
 
 
-#
-# General Geometry Types. No sigmoid functions here!
-#
 class Geometry:
+    """
+        The Geometry class is used to encapsulate the concept of a region defined by
+        the set of point at which a function is greater or equal to 1/2.
+    """
+
     def __init__(self, f, dim):
         """
-        Creates a geometry in type associated to the input function
+        Creates a geometrical object defined by the inequality f(p) >= 1/2
         :param f: a function
         :param dim: the number of independent variable of the function
         """
         self.dim = dim
         self.f = f
 
-    def geometry(self, f):
+    def __geometry(self, f):
         if self.dim == 2:
             return Geometry2D(f)
         elif self.dim == 3:
@@ -29,35 +41,41 @@ class Geometry:
         return Geometry(self, f)
 
     def __and__(self, b):
-        return self.geometry(self.f * b.f)
-
-    def __or__(self, b):
-
-        return self.geometry(self.f + b.f - self.f * b.f)
-
-    def __invert__(self):
-        return self.geometry(1 - self.f)
-
-    def __add__(self, b):
         """
-        Computes the smooth union of this set with b
+        Returns an object that is the intersection of this  object with b
         :param b:
         :return:
         """
-        return self.geometry(self.f + b.f - self.f * b.f)
+        return self.__geometry(self.f * b.f)
+
+    def __or__(self, b):
+        """
+        Returns an object that is the union of this  object with b
+        :param b:
+        :return:
+        """
+        return self.__geometry(self.f + b.f - self.f * b.f)
+
+    def __invert__(self):
+        """
+        Returns the complement (in the set theoretical sense) of this object
+        :return:
+        """
+        return self.__geometry(1 - self.f)
 
     def __sub__(self, b):
         """
-        Computes the smooth subtraction of this set with b
+        Returns an object that is the difference of this  object with b
         :param b:
         :return:
         """
-        return self.geometry(self.f * (1 - b.f))
-
-    def __neg__(self):
-        return self.geometry(1 - self.f)
+        return self.__geometry(self.f * (1 - b.f))
 
     def get_lambda(self):
+        """
+        Returns the lambda function of the function f, so that it can be used for numerical evaluation
+        :return:
+        """
         if self.dim == 3:
             return lambdify((x, y, z), self.f, 'numpy')
         elif self.dim == 2:
@@ -164,6 +182,32 @@ class Geometry3D(Geometry):
 #     (sigmoid functions here!    #
 #                                 #
 ###################################
+
+class HalfSpace3D(Geometry3D):
+    """
+    Defines the half space as the set of points (x,y,z) satisfying nx*x + ny*y + nz*z >= 0
+    """
+
+    def __init__(self, nx=0, ny=0, nz=1, k=1 / 2):
+        """
+        Defines the half space as the set of points (x,y,z) satisfying nx*x + ny*y + nz*z >= 0
+        :param nx: x-component of the normal vector to the plane
+        :param ny: y-component of the normal vector to the plane
+        :param nz: z-component of the normal vector to the plane
+        :param k: smoothing parameter
+        """
+        Geometry3D.__init__(self, sigmoid(nx * y + ny * y + nz * z, k))
+
+
+class FunctionGraph3D(Geometry3D):
+    def __init__(self, fxy, k=1 / 2):
+        """
+        Defines the region that consists of the set of point (x,y,z) such that z >= f_xy(x,y)
+        :param fxy: function dependent of the variables (x,y) and independent of z
+        :param k:smoothing parameter
+        """
+        Geometry3D.__init__(self, sigmoid(z - fxy, k))
+
 
 class Ball3D(Geometry3D):
     def __init__(self, x0=0, y0=0, z0=0, r_val=1, k=1 / 2):
@@ -272,5 +316,3 @@ class HalfPlane2D(Geometry2D):
         dx = x1 - x0
         dy = y1 - y0
         return -dy * (x - x0) + dx * (y - y0)
-
-# TODO: Create HalfPlane2D and HalfSpace3D Classes
