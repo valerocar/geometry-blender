@@ -1,4 +1,4 @@
-## Welcome to the home page for Geometry Blender 
+## Welcome!
 
 You can use the [editor on GitHub](https://github.com/valerocar/geometry-blender/edit/gh-pages/index.md) to maintain and preview the content for your website in Markdown files.
 
