@@ -13,12 +13,14 @@ def __function_level(f, level, domain, resolutions):
     z_inc = (z_max - z_min) / (res_z - 1)
     xs, ys, zs = np.meshgrid(np.linspace(x_min, x_max, res_x), np.linspace(y_min, y_max, res_y),
                              np.linspace(z_min, z_max, res_z))
-    fs = f(xs, ys, zs)
-    vs, ts, normals, values = measure.marching_cubes(fs, level, spacing=(x_inc, y_inc, z_inc))
-    vs[:, 0] += x_min
-    vs[:, 1] += y_min
-    vs[:, 2] += z_min
-    return vs, ts, normals, values
+    #fs = f(xs, ys, zs)
+    # TODO: Explain this!
+    fs = f(ys, xs, zs)
+    ps, ts, normals, values = measure.marching_cubes(fs, level, spacing=(x_inc, y_inc, z_inc))
+    ps[:, 0] += x_min
+    ps[:, 1] += y_min
+    ps[:, 2] += z_min
+    return ps, ts, normals, values
 
 
 def geometry_level(geometry, box, res=[120, 120, 120]):

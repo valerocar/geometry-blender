@@ -9,8 +9,8 @@ from sympy import symbols, cos, sin, sqrt, N, lambdify, exp
 
 def sigmoid(s, k):
     """
-    The sigmoid function as function of `s`
-    :param s:
+    The sigmoid function.
+    :param s: independent variable
     :param k: smoothing parameter
     :return:
     """
@@ -196,7 +196,7 @@ class HalfSpace3D(Geometry3D):
         :param nz: z-component of the normal vector to the plane
         :param k: smoothing parameter
         """
-        Geometry3D.__init__(self, sigmoid(nx * y + ny * y + nz * z, k))
+        Geometry3D.__init__(self, sigmoid(nx * x + ny * y + nz * z, k))
 
 
 class FunctionGraph3D(Geometry3D):

@@ -124,6 +124,6 @@ you will need to install the plotly graphing library as follows:
 
 - Anaconda Python: *conda install -c plotly plotly*
 
-
+[![Animation]](https://www.youtube.com/watch?v=QK1u-KmQVqI&feature=youtu.be "Video Title")
 
 
