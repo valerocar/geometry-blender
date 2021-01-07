@@ -269,7 +269,6 @@ class Torus3D(RevolutionSurface3D):
 #                        #
 ##########################
 
-# TODO: Complete this!
 class Geometry2D(Geometry):
 
     def __init__(self, f):
